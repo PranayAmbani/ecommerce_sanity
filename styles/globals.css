@@ -538,10 +538,10 @@ span.text-red {
 
 .filters2{
     display: block;
+    top: 1rem;
     transition: 350ms;
     position: relative;
     left: 1rem;
-    top: 1rem;
 }
 
 
@@ -891,7 +891,7 @@ span.text-red {
         height: 350px;
     }
     .cart-container {
-        width: 415px;
+        width: 392px;
         padding: 4px;
     }
 
