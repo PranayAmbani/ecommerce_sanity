@@ -1,20 +1,39 @@
-import React,{useState} from 'react';
-
+import React,{useState,useEffect} from 'react';
+import Box from '@mui/material/Box';
 import { client } from '../lib/client';
 import {price } from '../components/Sort'
-import { Product, FooterBanner, HeroBanner,NotFound } from '../components';
+import { Product, FooterBanner, HeroBanner} from '../components';
 import PriceSlider from '../components/MySlider';
-import { FaFilter } from 'react-icons/fa'
-import {AiOutlineClose} from 'react-icons/ai'
-function Home ({ products, bannerData }) {
+import { FaFilter } from 'react-icons/fa';
+import { DropDownList } from "@progress/kendo-react-dropdowns";
+import '@progress/kendo-theme-default/dist/all.css';
+import product from '../sanity_ecommerce/schemas/product';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+
+function Home ({ products, bannerData,categorys }) {
   const [sortOptions,setSortOptions]=useState([
   
     {label:'PRICE ↑',active:false,function:data=>price(data,'asc')}, 
     {label:'PRICE ↓',active:true,function:data=>price(data,'desc')},
  ])
 const [Filter, setFilter] = useState([20,100])
+const [filterCategory, setFilterCategory] = useState('all')
 const [ranges, setRanges] = useState(false);
+const sizes = ["headphones", "neckband", "earphones", "tws", "speakers", "smartwatch","all"];
+const handleChange = (event) => {
 
+
+    setFilterCategory(event.target.value);
+    
+
+};
+
+console.log(filterCategory);
 const showrange = () => setRanges(!ranges);
 
  const handleSort=i=>{
@@ -27,14 +46,21 @@ const showrange = () => setRanges(!ranges);
 
     products= selectedSort.function(products)
     var Price=[]
+    var cate=[]
     products.map(product=>{
       Price.push(product.price)
+      cate.push(product.category)
+      
     })
-    products=products.filter(product=>(product.price<=Filter[1]&&product.price>=Filter[0]))
+    
+    
 
 
+products = products.filter(product=>(product.price<=Filter[1]&&product.price>=Filter[0]))
+products=products.filter(product=>(filterCategory!=='all'?product.category===filterCategory:products))
   return (
   <div>
+
     <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
    
     <div className="products-heading">
@@ -43,19 +69,44 @@ const showrange = () => setRanges(!ranges);
     </div>
   <FaFilter style={{fontSize:'2rem',cursor:'pointer',color:'#324d67'}} onClick={showrange} />
 
-
 <div className={ranges ? 'filters active' : 'filters'}>
+<div>
+
+          <div>
+          <Box sx={{ minWidth: 120 }}>
+      <FormControl halfWidth style={{marginTop:'1rem'}}>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={filterCategory}
+          label="Category"
+          onChange={handleChange}
+        >
+          
+          {sizes.map(size=>
+
+
+          <MenuItem value={size}>{size[0].toUpperCase() + size.substring(1)}</MenuItem>
+          )
+          }
+        </Select>
+      </FormControl>
+    </Box>
+    </div>
+
+        </div>
 
 <PriceSlider Price={Price} setFilter={setFilter} Filter={Filter} />
 
 
   <button type='button' className='btn2' onClick={()=>handleSort(1)}> Low to high</button>
   <button type='button' className='btn2' onClick={()=>handleSort(0)}> High to low</button>
+ 
   </div>
 
- 
 
-    <div className="products-container">
+  <div className="products-container">
       {products?.map((product) => <Product key={product._id} product={product} />)}
 
       
@@ -83,5 +134,4 @@ export const getServerSideProps = async () => {
     
   }
 }
-
 export default Home;

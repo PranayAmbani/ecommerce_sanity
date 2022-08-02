@@ -21,6 +21,7 @@ const ProductDetails = ({ product, products }) => {
 
     setShowCart(true);
   }
+
   
 
   return (
