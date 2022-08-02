@@ -28,6 +28,7 @@
         "canvas-confetti": "^1.5.1",
         "components": "^0.1.0",
         "cors": "^2.8.5",
+        "date-fns": "^2.29.1",
         "express": "^4.18.1",
         "fs": "^0.0.1-security",
         "next": "12.1.0",
@@ -42,7 +43,8 @@
         "sort-by": "^1.2.0",
         "stripe": "^8.209.0",
         "styled": "^1.0.0",
-        "styled-components": "^5.3.5"
+        "styled-components": "^5.3.5",
+        "vercel": "^27.3.3"
     },
     "devDependencies": {
         "eslint": "^8.10.0",

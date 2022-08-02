@@ -15,7 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
-function Home ({ products, bannerData,categorys }) {
+function Home ({ products, bannerData }) {
   const [sortOptions,setSortOptions]=useState([
   
     {label:'PRICE ↑',active:false,function:data=>price(data,'asc')}, 
@@ -25,6 +25,9 @@ const [Filter, setFilter] = useState([20,100])
 const [filterCategory, setFilterCategory] = useState('all')
 const [ranges, setRanges] = useState(false);
 const sizes = ["headphones", "neckband", "earphones", "tws", "speakers", "smartwatch","all"];
+
+const [searchTerm, setSearchTerm] = useState(null);
+
 const handleChange = (event) => {
 
 
@@ -32,8 +35,14 @@ const handleChange = (event) => {
     
 
 };
+const handleChange2 = (event) => {
 
-console.log(filterCategory);
+
+  setSearchTerm(event.target.value);
+  
+
+};
+
 const showrange = () => setRanges(!ranges);
 
  const handleSort=i=>{
@@ -47,22 +56,36 @@ const showrange = () => setRanges(!ranges);
     products= selectedSort.function(products)
     var Price=[]
     var cate=[]
+    var search=[]
     products.map(product=>{
       Price.push(product.price)
       cate.push(product.category)
-      
+      search.push(product.name)
+      // console.log((searchTerm.toLowerCase()===product.name.toLowerCase()));
     })
     
     
+    
+    
+    products = products.filter(product=>(product.price<=Filter[1]&&product.price>=Filter[0]))
+    products=products.filter(product=>(filterCategory!=='all'?product.category===filterCategory:products))
+    products=products.filter(product=>searchTerm?(searchTerm.toLowerCase()===product.name.toLowerCase()):products)
+    // console.log(searchTerm);
 
 
-products = products.filter(product=>(product.price<=Filter[1]&&product.price>=Filter[0]))
-products=products.filter(product=>(filterCategory!=='all'?product.category===filterCategory:products))
+
+
   return (
   <div>
 
     <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
-   
+
+
+          <input
+            placeholder="Search Product"
+            onChange={handleChange2}
+          />
+
     <div className="products-heading">
       <h2>Best Seller Products</h2>
       <p>speaker There are many variations passages</p>
