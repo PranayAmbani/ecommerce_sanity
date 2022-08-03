@@ -24,7 +24,7 @@ function Home ({ products, bannerData }) {
 const [Filter, setFilter] = useState([20,100])
 const [filterCategory, setFilterCategory] = useState('all')
 const [ranges, setRanges] = useState(false);
-const sizes = ["headphones", "neckband", "earphones", "tws", "speakers", "smartwatch","all"];
+
 
 const [searchTerm, setSearchTerm] = useState(null);
 
@@ -109,12 +109,18 @@ const showrange = () => setRanges(!ranges);
           onChange={handleChange}
         >
           
-          {sizes.map(size=>
+          {/* const sizes = ["headphones", "neckband", "earphones", "tws", "speakers", "smartwatch","all"]; */}
 
 
-          <MenuItem value={size}>{size[0].toUpperCase() + size.substring(1)}</MenuItem>
-          )
-          }
+          <MenuItem value='headphones'>Headphones</MenuItem>
+          <MenuItem value='neckband'>Neckband</MenuItem>
+          <MenuItem value='earphones'>Earphones</MenuItem>
+          <MenuItem value='tws'>Wireless Earphones</MenuItem>
+          <MenuItem value='speakers'>Speakers</MenuItem>
+          <MenuItem value='smartwatch'>Smart Watch</MenuItem>
+          <MenuItem value='all'>All</MenuItem>
+          
+          
         </Select>
       </FormControl>
     </Box>
