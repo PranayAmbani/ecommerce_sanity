@@ -69,7 +69,7 @@ const showrange = () => setRanges(!ranges);
     
     products = products.filter(product=>(product.price<=Filter[1]&&product.price>=Filter[0]))
     products=products.filter(product=>(filterCategory!=='all'?product.category===filterCategory:products))
-    products=products.filter(product=>searchTerm?(searchTerm.toLowerCase()===product.name.toLowerCase()):products)
+    products=products.filter(product=>searchTerm?(product.name.toLowerCase().includes(searchTerm)):products)
 
 
 
@@ -109,7 +109,6 @@ const showrange = () => setRanges(!ranges);
           onChange={handleChange}
         >
           
-          {/* const sizes = ["headphones", "neckband", "earphones", "tws", "speakers", "smartwatch","all"]; */}
 
 
           <MenuItem value='headphones'>Headphones</MenuItem>
