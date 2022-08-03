@@ -61,7 +61,7 @@ const showrange = () => setRanges(!ranges);
       Price.push(product.price)
       cate.push(product.category)
       search.push(product.name)
-      // console.log((searchTerm.toLowerCase()===product.name.toLowerCase()));
+     
     })
     
     
@@ -70,7 +70,7 @@ const showrange = () => setRanges(!ranges);
     products = products.filter(product=>(product.price<=Filter[1]&&product.price>=Filter[0]))
     products=products.filter(product=>(filterCategory!=='all'?product.category===filterCategory:products))
     products=products.filter(product=>searchTerm?(searchTerm.toLowerCase()===product.name.toLowerCase()):products)
-    // console.log(searchTerm);
+
 
 
 
@@ -79,12 +79,14 @@ const showrange = () => setRanges(!ranges);
   <div>
 
     <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
+<div className="search">
 
 
           <input
             placeholder="Search Product"
             onChange={handleChange2}
-          />
+            />
+            </div>
 
     <div className="products-heading">
       <h2>Best Seller Products</h2>

@@ -61,15 +61,24 @@ a {
     text-decoration: none;
     display: block;
   }
-  input{
-    height: 2.5rem;
-    width: 18rem;
-    border: 0.2px solid black;
-    position: relative;
+  .search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 2rem;
-    left: 28vw;
-    text-align: center;
-    border-radius: 10px;
+   
+  }
+
+  input{
+    height: 3rem;
+    width: 20rem;
+    border:none;
+    background-color: #cfcfcf3c;
+   text-align: center;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    
   }
   
   
