@@ -8,7 +8,7 @@ import {
 } from "react-icons/ai";
 import { Product } from "../../components";
 import { useStateContext } from "../../context/StateContext";
-import { toast } from 'react-hot-toast';
+
 
 const ProductDetails = ({ product, products }) => {
   const { image, name, details, price } = product;

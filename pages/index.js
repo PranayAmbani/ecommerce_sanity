@@ -2,20 +2,20 @@ import React,{useState,useEffect} from 'react';
 import Box from '@mui/material/Box';
 import { client } from '../lib/client';
 import {price } from '../components/Sort'
-import { Product, FooterBanner, HeroBanner} from '../components';
+import { Product, FooterBanner, HeroBanner,Search} from '../components';
 import PriceSlider from '../components/MySlider';
 import { FaFilter } from 'react-icons/fa';
-import { DropDownList } from "@progress/kendo-react-dropdowns";
+
 import '@progress/kendo-theme-default/dist/all.css';
-import product from '../sanity_ecommerce/schemas/product';
-import OutlinedInput from '@mui/material/OutlinedInput';
+
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
-function Home ({ products, bannerData }) {
+function Home ({ products,bannerData }) {
+  
   const [sortOptions,setSortOptions]=useState([
   
     {label:'PRICE ↑',active:false,function:data=>price(data,'asc')}, 
@@ -24,6 +24,31 @@ function Home ({ products, bannerData }) {
 const [Filter, setFilter] = useState([20,100])
 const [filterCategory, setFilterCategory] = useState('all')
 const [ranges, setRanges] = useState(false);
+const [searchtext, setSearchtext] = useState("");
+const [suggest, setSuggest] = useState([]);
+const [resfound, setResfound] = useState(true);
+
+
+const handleChange3 = (e) => {
+  let searchval = e.target.value;
+  let suggestion = [];
+  if (searchval.length > 0) {
+    suggestion = search
+      .sort()
+      .filter((e) => e.toLowerCase().includes(searchval.toLowerCase()));
+    setResfound(suggestion.length !== 0 ? true : false);
+  }
+  setSuggest(suggestion);
+  setSearchtext(searchval);
+};
+
+const suggestedText = (value) => {
+  console.log(value);
+  setSearchtext(value);
+  setSuggest([]);
+};
+
+
 
 
 const [searchTerm, setSearchTerm] = useState(null);
@@ -63,13 +88,30 @@ const showrange = () => setRanges(!ranges);
       search.push(product.name)
      
     })
+
+    const getSuggestions = () => {
+      if (suggest.length === 0 && searchtext !== "" && !resfound) {
+        return <p>Search Content Not Found</p>;
+      }
+  
+      return (
+        <ul>
+          {suggest.map((item, index) => {
+            return (
+              <div key={index}>
+                <li onClick={() => suggestedText(item)}>{item}</li>
+                {index !== suggest.length - 1 && <hr />}
+              </div>
+            );
+          })}
+        </ul>
+      );
+    };
     
-    
-    
-    
+
     products = products.filter(product=>(product.price<=Filter[1]&&product.price>=Filter[0]))
     products=products.filter(product=>(filterCategory!=='all'?product.category===filterCategory:products))
-    products=products.filter(product=>searchTerm?(product.name.toLowerCase().includes(searchTerm.toLowerCase())):products)
+    products=products.filter(product=>searchtext?(product.name.toLowerCase().includes(searchtext.toLowerCase())):products)
 
 
 
@@ -79,14 +121,25 @@ const showrange = () => setRanges(!ranges);
   <div>
 
     <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
-<div className="search">
+{/* <div className="search">
 
 
           <input
             placeholder="Search Product"
             onChange={handleChange2}
             />
-            </div>
+            </div> */}
+            {/* <Search/> */}
+            <div className="searchcontainer">
+      <input
+        type="text"
+        placeholder="Search Products"
+        className="search2"
+        value={searchtext}
+        onChange={handleChange3}
+      />
+      {getSuggestions()}
+    </div>
 
     <div className="products-heading">
       <h2>Best Seller Products</h2>
@@ -107,11 +160,12 @@ const showrange = () => setRanges(!ranges);
           value={filterCategory}
           label="Category"
           onChange={handleChange}
+         
         >
           
 
 
-          <MenuItem value='headphones'>Headphones</MenuItem>
+          <MenuItem value='headphones' >Headphones</MenuItem>
           <MenuItem value='neckband'>Neckband</MenuItem>
           <MenuItem value='earphones'>Earphones</MenuItem>
           <MenuItem value='tws'>Wireless Earphones</MenuItem>
@@ -155,7 +209,6 @@ const showrange = () => setRanges(!ranges);
 export const getServerSideProps = async () => {
   const query = '*[_type == "product"]';
   const products = await client.fetch(query);
-
   const bannerQuery = '*[_type == "banner"]';
   const bannerData = await client.fetch(bannerQuery);
 

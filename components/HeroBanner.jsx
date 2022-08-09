@@ -6,11 +6,10 @@ import { urlFor } from '../lib/client';
 
 
 
-const HeroBanner = ({ heroBanner }) => {
+const HeroBanner = ({ heroBanner}) => {
   const Scroll = () =>{
     window.scrollTo(300, 500);
   }
-
 
   return (
     <div className='hero-banner-container'>
