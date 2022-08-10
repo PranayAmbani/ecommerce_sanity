@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import Box from '@mui/material/Box';
 import { client } from '../lib/client';
 import {price } from '../components/Sort'
-import { Product, FooterBanner, HeroBanner,Search} from '../components';
+import { Product, FooterBanner, HeroBanner} from '../components';
 import PriceSlider from '../components/MySlider';
 import { FaFilter } from 'react-icons/fa';
 
