@@ -43,7 +43,7 @@ const handleChange3 = (e) => {
 };
 
 const suggestedText = (value) => {
-  console.log(value);
+  // console.log(value);
   setSearchtext(value);
   setSuggest([]);
 };
@@ -91,15 +91,15 @@ const showrange = () => setRanges(!ranges);
 
     const getSuggestions = () => {
       if (suggest.length === 0 && searchtext !== "" && !resfound) {
-        return <p>Search Content Not Found</p>;
+        return <p className='notfound'>Search Content Not Found</p>;
       }
   
       return (
-        <ul>
+        <ul className='suggest'>
           {suggest.map((item, index) => {
             return (
-              <div key={index}>
-                <li onClick={() => suggestedText(item)}>{item}</li>
+              <div key={index} >
+                <li onClick={() => suggestedText(item)} >{item}</li>
                 {index !== suggest.length - 1 && <hr />}
               </div>
             );
@@ -121,15 +121,9 @@ const showrange = () => setRanges(!ranges);
   <div>
 
     <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
-{/* <div className="search">
+    <div className="search-main">
 
 
-          <input
-            placeholder="Search Product"
-            onChange={handleChange2}
-            />
-            </div> */}
-            {/* <Search/> */}
             <div className="searchcontainer">
       <input
         type="text"
@@ -137,9 +131,10 @@ const showrange = () => setRanges(!ranges);
         className="search2"
         value={searchtext}
         onChange={handleChange3}
-      />
+        />
       {getSuggestions()}
     </div>
+        </div>
 
     <div className="products-heading">
       <h2>Best Seller Products</h2>
