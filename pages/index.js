@@ -91,7 +91,7 @@ const showrange = () => setRanges(!ranges);
 
     const getSuggestions = () => {
       if (suggest.length === 0 && searchtext !== "" && !resfound) {
-        return <p className='notfound'>Search Content Not Found</p>;
+        return <p className='notfound'>Searched Product Not Found</p>;
       }
   
       return (
