@@ -121,8 +121,11 @@ ul {
 
 ul li {
     cursor: pointer;
+    padding: 10px;
 }
-
+ul li:hover{
+    background-color: #cfcfcfb8;
+}
 hr{
     border: none;
 }
