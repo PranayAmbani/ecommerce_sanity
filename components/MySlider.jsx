@@ -27,7 +27,7 @@ function valuetext(value) {
         value:Price,label:Price.toString()})
       Price=Price+step;
     }
-    const [ranges2, setRanges2] = useState(false);
+    const [ranges2, setRanges2] = useState(true);
 
     const showrange = () => setRanges2(!ranges2);
     return (
